@@ -7,7 +7,6 @@ import org.springframework.lang.NonNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class RsData<T> {
 
     @NonNull
