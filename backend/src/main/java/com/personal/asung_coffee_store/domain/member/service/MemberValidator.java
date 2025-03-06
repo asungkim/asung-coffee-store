@@ -14,18 +14,22 @@ public class MemberValidator {
     // TODO : 비밀번호, 이메일 형식, 데이터 누락 검증 (향후 리펙토링)
 
     public void validateSignupForm(SignupForm signupForm) {
-        validateDuplicateMember(signupForm.username(), signupForm.email());
+        validateUsername(signupForm.username());
+        validateEmail(signupForm.email());
     }
 
-    private void validateDuplicateMember(String username, String email) {
+    private void validateUsername(String username) {
         boolean isUsernameExist = memberRepository.existsByUsername(username);
         if (isUsernameExist) {
             throw new ServiceException("409-1", "이미 존재하는 아이디입니다.");
         }
 
+    }
+
+    private void validateEmail(String email) {
         boolean isEmailExist = memberRepository.existsByEmail(email);
         if (isEmailExist) {
-            throw new ServiceException("409-1", "이미 존재하는 이메일입니다.");
+            throw new ServiceException("409-2", "이미 존재하는 이메일입니다.");
         }
     }
 }
