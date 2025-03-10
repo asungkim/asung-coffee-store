@@ -51,6 +51,7 @@ class MemberControllerTest {
         SignupForm signupForm = new SignupForm(
                 "asung123",
                 "Passw0rd!",
+                "asungkim",
                 "김아성",
                 "asung@example.com",
                 "010-1234-5678",
@@ -78,6 +79,7 @@ class MemberControllerTest {
         SignupForm signupForm = new SignupForm(
                 "asung123",
                 "Passw0rd!",
+                "asungkim",
                 "김아성",
                 "asung@example.com",
                 "010-1234-5678",
@@ -109,6 +111,7 @@ class MemberControllerTest {
         SignupForm signupForm1 = new SignupForm(
                 "asung123",
                 "Passw0rd!",
+                "asungkim",
                 "김아성",
                 "asung@example.com",
                 "010-1234-5678",
@@ -128,6 +131,7 @@ class MemberControllerTest {
         SignupForm signupForm2 = new SignupForm(
                 "aaaabbbb",
                 "Passw0rd!",
+                "asungkim1",
                 "김아성",
                 "asung@example.com",
                 "010-1234-5678",
@@ -141,6 +145,49 @@ class MemberControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.code").value("409-2"))
                 .andExpect(jsonPath("$.message").value("이미 존재하는 이메일입니다."));
+
+    }
+
+    @Test
+    @DisplayName("회원가입 실패 - 중복 닉네임")
+    void signup4() throws Exception {
+        SignupForm signupForm1 = new SignupForm(
+                "asung123",
+                "Passw0rd!",
+                "asungkim",
+                "김아성",
+                "asung@example.com",
+                "010-1234-5678",
+                "서울특별시 강남구",
+                "12345"
+        );
+
+        ResultActions resultActions = signupRequest(signupForm1);
+
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(handler().methodName("createMember"))
+                .andExpect(handler().handlerType(MemberController.class))
+                .andExpect(jsonPath("$.code").value("200"))
+                .andExpect(jsonPath("$.message").value("회원가입이 완료되었습니다."));
+
+        SignupForm signupForm2 = new SignupForm(
+                "aaaabbbb",
+                "Passw0rd!",
+                "asungkim",
+                "김아성",
+                "asung123@example.com",
+                "010-1234-5678",
+                "서울특별시 강남구",
+                "12345"
+        );
+
+        ResultActions sameRequestResult = signupRequest(signupForm2);
+
+        sameRequestResult
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("409-3"))
+                .andExpect(jsonPath("$.message").value("이미 존재하는 닉네임입니다."));
 
     }
 
