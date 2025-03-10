@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 
         String errorMessage = fieldErrors.stream()
                 .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining("\n"));
 
         return ResponseEntity
                 .status(e.getStatusCode())

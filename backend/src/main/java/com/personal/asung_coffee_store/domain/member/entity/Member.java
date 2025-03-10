@@ -25,6 +25,9 @@ public class Member extends BaseTime {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String nickname;
+
     @Column(nullable = false, unique = true)
     private String email;
 

@@ -9,6 +9,7 @@ import lombok.Getter;
 public class MemberResponse {
     private Long id;
     private String username;
+    private String nickname;
     private String name;
     private String email;
     private String phoneNumber;
@@ -19,6 +20,7 @@ public class MemberResponse {
         return MemberResponse.builder()
                 .id(member.getId())
                 .username(member.getUsername())
+                .nickname(member.getNickname())
                 .name(member.getName())
                 .email(member.getEmail())
                 .phoneNumber(member.getPhoneNumber())

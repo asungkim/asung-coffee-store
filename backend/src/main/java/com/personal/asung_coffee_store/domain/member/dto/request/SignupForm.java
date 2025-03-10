@@ -18,6 +18,8 @@ public record SignupForm(
                 message = "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.")
         String password,
 
+        String nickname,
+
         @NotBlank(message = "이름은 필수로 입력하여야 합니다.")
         String name,
 
